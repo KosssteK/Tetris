@@ -16,7 +16,8 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
         } else if (event.keyCode === 40) { //move down
             timeCounter = 60;
         } else if (event.keyCode === 38) { //rotate
-            //rotate();
+            //TODO: rotation block collision
+            rotate();
         }
     });
 
@@ -76,19 +77,16 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
                 var nextY = (block.y + i * Settings.blockHeight + Settings.blockHeight) / Settings.blockHeight;
                 var x = (block.x + j * Settings.blockWidth) / Settings.blockWidth;
 
-                if (((block.blockTable.length + 1) * Settings.blockHeight + block.y) > Settings.screenHeight) {
+                if (((block.blockTable.length + 1) * Settings.blockHeight + block.y) > Settings.screenHeight ||
+                    (map.backgroundTable[nextY][x] !== 'background' && block.blockTable[i][j] === 1)) {
 
                     map.addToMapTable(block);
                     block.y = 0;
                     timeCounter = 0;
                     block.removeChildren();
+                    map.clearRow();
                     return false;
-                } else if (map.backgroundTable[nextY][x] !== 'background' && block.blockTable[i][j] === 1) {
-                    map.addToMapTable(block);
-                    block.y = 0;
-                    timeCounter = 0;
-                    block.removeChildren();
-                    return false;
+
                 } else {
                     timeCounter = 0;
                 }
@@ -98,6 +96,10 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
     }
 
     function moveSideways(direction) {
+        //TODO: side block collision
         block.moveSideways(direction);
+    }
+    function rotate(){
+        block.rotate();
     }
 });

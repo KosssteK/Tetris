@@ -5,10 +5,10 @@
 
 define(['PIXI', 'Settings'], function (PIXI, Settings) {
 
-    function Block(){
+    function Block() {
         PIXI.Container.call(this);
-        this.x =Math.floor(Settings.screenWidth/2);
-        this.y=0;
+        this.x = Math.floor(Settings.screenWidth / 2);
+        this.y = 0;
         this.blockTable = [];
         this.color = '';
     }
@@ -16,16 +16,16 @@ define(['PIXI', 'Settings'], function (PIXI, Settings) {
     Block.prototype = Object.create(PIXI.Container.prototype);
     Block.prototype.constructor = Block;
 
-    Block.prototype.buildBlock = function (){
+    Block.prototype.buildBlock = function () {
 
 
-        for(var i =0; i < this.blockTable.length; i++){
-            for(var j =0; j < this.blockTable[i].length; j++){
-                if(this.blockTable[i][j] === 1){
+        for (var i = 0; i < this.blockTable.length; i++) {
+            for (var j = 0; j < this.blockTable[i].length; j++) {
+                if (this.blockTable[i][j] === 1) {
 
-                        var blockImage = new PIXI.Sprite(PIXI.loader.resources[this.color].texture);
-                        blockImage.x = j*Settings.blockWidth;
-                        blockImage.y = i*Settings.blockWidth;
+                    var blockImage = new PIXI.Sprite(PIXI.loader.resources[this.color].texture);
+                    blockImage.x = j * Settings.blockWidth;
+                    blockImage.y = i * Settings.blockWidth;
 
                     this.addChild(blockImage);
                 }
@@ -35,7 +35,6 @@ define(['PIXI', 'Settings'], function (PIXI, Settings) {
         Settings.stage.addChild(this);
 
 
-
     };
     Block.prototype.move = function () {
 
@@ -43,15 +42,31 @@ define(['PIXI', 'Settings'], function (PIXI, Settings) {
     };
     Block.prototype.moveSideways = function (direction) {
 
-        if(direction === -1 && (this.x) > 0){
+        if (direction === -1 && (this.x) > 0) {
             this.x -= Settings.blockWidth;
-        }else if(direction === 1 && (this.x + this.blockTable[0].length*Settings.blockWidth) < Settings.screenWidth){
+        } else if (direction === 1 && (this.x + this.blockTable[0].length * Settings.blockWidth) < Settings.screenWidth) {
             this.x += Settings.blockWidth;
         }
     };
-    
-    
-    
+    Block.prototype.rotate = function () {
+        var table = [];
+        for (var i = 0; i < this.blockTable[0].length; i++) {
+            table[i] = [];
+            for(var j = 0; j < this.blockTable.length; j++){
+                table[i][j]=0;
+            }
+        }
+        for (var i = 0; i < table.length; i++) {
+            for (var j = 0; j < table[i].length; j++) {
+                table[i][j] = this.blockTable[j][table.length - i - 1];
+            }
+        }
+        this.blockTable = table;
+        this.removeChildren();
+        this.buildBlock();
+    };
+
+
     return Block;
 
 });

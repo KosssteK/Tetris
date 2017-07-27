@@ -12,7 +12,6 @@ define(['Settings',
 
     function BlockFactory() {
 
-
     }
 
     BlockFactory.prototype.instance = Square;
