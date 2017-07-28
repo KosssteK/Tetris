@@ -41,7 +41,7 @@ define(['PIXI', 'Settings'], function (PIXI, Settings) {
         this.y += Settings.blockHeight;
     };
     Block.prototype.moveSideways = function (map, direction) {
-        if (((this.x) > 0 || (this.x + this.blockTable[0].length * Settings.blockWidth) < Settings.screenWidth) && blockCollision(this, map, direction)) {
+        if (borders(this) && blockCollision(this, map, direction)) {
             this.x = this.x + direction * Settings.blockWidth;
         }
     };
@@ -97,6 +97,10 @@ define(['PIXI', 'Settings'], function (PIXI, Settings) {
         }
         return false;
 
+    }
+
+    function borders(block) {
+        return ((block.x) > 0 || (block.x + block.blockTable[0].length * Settings.blockWidth) < Settings.screenWidth);
     }
 
     return Block;

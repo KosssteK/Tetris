@@ -8,16 +8,16 @@ define(['Settings',
     'LeftL',
     'RightCurve',
     'RightL',
-    'Straight'], function (Settings,Square, Center, LeftCurve, LeftL, RightL,RightCurve,Straight) {
+    'Straight'], function (Settings, Square, Center, LeftCurve, LeftL, RightL, RightCurve, Straight) {
 
     function BlockFactory() {
 
     }
 
     BlockFactory.prototype.instance = Square;
-    BlockFactory.prototype.createBlock = function (blockType) {
+    BlockFactory.prototype.createBlock = function () {
 
-        switch (blockType) {
+        switch (randomBlock()) {
             case 1:
                 this.instance = Square;
                 break;
@@ -40,11 +40,12 @@ define(['Settings',
                 this.instance = Center;
                 break;
         }
-        return new this.instance(blockType);
+        return new this.instance;
     };
-    BlockFactory.prototype.randomBlock= function(){
-        return Math.round(Math.random()*6+1);
-    };
+
+    function randomBlock() {
+        return Math.round(Math.random() * 6 + 1);
+    }
 
     return BlockFactory;
 });

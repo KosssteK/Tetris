@@ -3,15 +3,16 @@
  */
 define(['Block', 'Extend'], function (Block, Extend) {
 
-    function SquareBlock(){
+    function SquareBlock() {
         Block.call(this);
         this.color = 'yellow';
-        this.blockTable = [[1,1],
-                            [1,1]];
+        this.blockTable = [[1, 1],
+            [1, 1]];
 
         this.buildBlock();
 
     }
+
     Extend(Block, SquareBlock);
     return SquareBlock;
 });

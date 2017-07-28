@@ -9,7 +9,7 @@ requirejs.config({
         Settings: 'Settings',
         Block: 'Block/Block',
         Map: 'Map/Map',
-        Extend:'Extend/Extend',
+        Extend: 'Extend/Extend',
         BlockFactory: 'Block/BlockFactory',
         Square: 'Block/BlocksCategory/SquareBlock',
         LeftCurve: 'Block/BlocksCategory/LeftCurveBlock',

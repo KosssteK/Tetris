@@ -16,7 +16,6 @@ define(['Settings', 'PIXI'], function (Settings, PIXI) {
 
     Map.prototype = Object.create(PIXI.Container.prototype);
     Map.prototype.constructor = Map;
-
     Map.prototype.buildMap = function () {
 
         for (var i = 0; i < this.backgroundTable.length; i++) {
@@ -57,44 +56,38 @@ define(['Settings', 'PIXI'], function (Settings, PIXI) {
     Map.prototype.clearRow = function (sound, text) {
         var rowCounter = 0;
         var points = 0;
-        var wholeRowBlocks = Settings.screenWidth/Settings.blockWidth;
+        var wholeRowBlocks = Settings.screenWidth / Settings.blockWidth;
         for (var i = this.backgroundTable.length - 1; i > 0; i--) {
             for (var j = 0; j < this.backgroundTable[i].length; j++) {
-                if(this.backgroundTable[i][j] !=='background'){
+                if (this.backgroundTable[i][j] !== 'background') {
                     rowCounter++;
                 }
             }
-            if(rowCounter===wholeRowBlocks)
-            {
-                var value = document.getElementById('score').value;
-                value += 10;
-                document.getElementById('score').value = value;
-                document.getElementById('score').innerHTML = value;
-                sound.pause();
-                sound.currentTime = 0;
-                sound.play();
+            if (rowCounter === wholeRowBlocks) {
+                clearRowActivities(sound);
                 points++;
-                clearTheRow(this.backgroundTable,i);
+                clearTheRow(this.backgroundTable, i);
                 i++;
             }
-            rowCounter=0;
+            rowCounter = 0;
         }
-        if(points > 0){
+        if (points > 0) {
             resetPointsText(text, points);
         }
         this.rebuildMap();
     };
 
-    function clearTheRow(table,rowNumber){
+    function clearTheRow(table, rowNumber) {
 
-        for (var i = rowNumber; topOfMap(table,i); i--) {
+        for (var i = rowNumber; topOfMap(table, i); i--) {
             for (var j = 0; j < table[i].length; j++) {
-                table[i][j] = table[i-1][j];
+                table[i][j] = table[i - 1][j];
             }
         }
 
     }
-    function topOfMap(table,rowNumber){
+
+    function topOfMap(table, rowNumber) {
 
         for (var j = 0; j < table[rowNumber].length; j++) {
             if (table[rowNumber][j] !== 'background') {
@@ -103,11 +96,22 @@ define(['Settings', 'PIXI'], function (Settings, PIXI) {
         }
         return false;
     }
-    function resetPointsText(text, points){
-        text.text = '+' + points*10;
+
+    function resetPointsText(text, points) {
+        text.text = '+' + points * 10;
         text.x = Math.round(Settings.screenWidth / 2 - text.width / 2);
         text.y = Math.round(Settings.screenHeight / 2 - text.height / 2);
         text.alpha = 1;
+    }
+
+    function clearRowActivities(sound) {
+        var value = document.getElementById('score').value;
+        value += 10;
+        document.getElementById('score').value = value;
+        document.getElementById('score').innerHTML = value;
+        sound.pause();
+        sound.currentTime = 0;
+        sound.play();
     }
 
     return Map;

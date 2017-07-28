@@ -3,14 +3,15 @@
  */
 define(['Block', 'Extend'], function (Block, Extend) {
 
-    function StraightBlock(){
+    function StraightBlock() {
         Block.call(this);
         this.color = 'cyan';
-        this.blockTable = [[1,1,1,1]];
+        this.blockTable = [[1, 1, 1, 1]];
 
         this.buildBlock();
 
     }
+
     Extend(Block, StraightBlock);
     return StraightBlock;
 });

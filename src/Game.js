@@ -61,7 +61,7 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
 
         if (block.children.length === 0) { //TODO: game over
             if (!gameOver()) {
-                block = blockFactory.createBlock(blockFactory.randomBlock());
+                block = blockFactory.createBlock();
             } else {
                 cancelAnimationFrame(req);
                 displayGameOver();
@@ -77,7 +77,6 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
         pointsAnimation();
         Settings.renderer.render(Settings.stage);
     }
-
 
     function isMovePossible(block, map) {
         for (var i = 0; i < block.blockTable.length; i++) {
@@ -138,14 +137,14 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
         Settings.stage.addChild(message);
     }
 
-    function setPointsAnimatoin(){
-        pointsText.alpha =256;
+    function setPointsAnimatoin() {
+        pointsText.alpha = 256;
         pointsText.x = Settings.screenWidth / 2 - pointsText.width / 2;
         pointsText.y = Math.round(Settings.screenHeight / 2) - pointsText.height / 2;
     }
 
     function pointsAnimation() {
-        if(pointsText.alpha < 250){
+        if (pointsText.alpha < 250) {
             pointsText.alpha += 5;
             pointsText.y += 2;
         }

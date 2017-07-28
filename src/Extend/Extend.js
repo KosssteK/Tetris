@@ -2,7 +2,7 @@
  * Created by Wojciech on 2017-07-27.
  */
 
-define([], function() {
+define([], function () {
 
     function Extend(base, sub) {
 
@@ -17,5 +17,6 @@ define([], function() {
             value: sub
         });
     }
+
     return Extend;
 });
