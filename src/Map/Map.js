@@ -56,6 +56,7 @@ define(['Settings', 'PIXI'], function (Settings, PIXI) {
     };
     Map.prototype.clearRow = function (sound, text) {
         var rowCounter = 0;
+        var points = 0;
         var wholeRowBlocks = Settings.screenWidth/Settings.blockWidth;
         for (var i = this.backgroundTable.length - 1; i > 0; i--) {
             for (var j = 0; j < this.backgroundTable[i].length; j++) {
@@ -72,11 +73,14 @@ define(['Settings', 'PIXI'], function (Settings, PIXI) {
                 sound.pause();
                 sound.currentTime = 0;
                 sound.play();
-                resetPointsText(text);
+                points++;
                 clearTheRow(this.backgroundTable,i);
                 i++;
             }
             rowCounter=0;
+        }
+        if(points > 0){
+            resetPointsText(text, points);
         }
         this.rebuildMap();
     };
@@ -99,7 +103,8 @@ define(['Settings', 'PIXI'], function (Settings, PIXI) {
         }
         return false;
     }
-    function resetPointsText(text){
+    function resetPointsText(text, points){
+        text.text = '+' + points*10;
         text.x = Math.round(Settings.screenWidth / 2 - text.width / 2);
         text.y = Math.round(Settings.screenHeight / 2 - text.height / 2);
         text.alpha = 1;

@@ -146,7 +146,7 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
 
     function pointsAnimation() {
         if(pointsText.alpha < 250){
-            pointsText.alpha += 6;
+            pointsText.alpha += 5;
             pointsText.y += 2;
         }
     }
