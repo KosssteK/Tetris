@@ -9,18 +9,19 @@ define([],function () {
 
         function init(){
             var screenWidth = 320;
-            var screenHeight = 640;
+            var screenHeight = 320;
             var blockHeight = 16;
             var blockWidth = 16;
+            var speed = 5;
             var renderer = null;
             var stage = null;
-
 
             return {
                 screenWidth:screenWidth,
                 screenHeight:screenHeight,
                 blockWidth:blockWidth,
                 blockHeight:blockHeight,
+                speed:speed,
                 renderer:renderer,
                 stage:stage
             }
@@ -33,11 +34,7 @@ define([],function () {
             return this.instance;
         })();
 
-
-
     }
 
     return new Settings;
-
-
 });

@@ -54,10 +54,9 @@ define(['Settings', 'PIXI'], function (Settings, PIXI) {
 
         this.rebuildMap();
     };
-    Map.prototype.clearRow = function () {
+    Map.prototype.clearRow = function (sound, text) {
         var rowCounter = 0;
         var wholeRowBlocks = Settings.screenWidth/Settings.blockWidth;
-        console.log(this.backgroundTable[this.backgroundTable.length - 1].length);
         for (var i = this.backgroundTable.length - 1; i > 0; i--) {
             for (var j = 0; j < this.backgroundTable[i].length; j++) {
                 if(this.backgroundTable[i][j] !=='background'){
@@ -66,11 +65,20 @@ define(['Settings', 'PIXI'], function (Settings, PIXI) {
             }
             if(rowCounter===wholeRowBlocks)
             {
+                var value = document.getElementById('score').value;
+                value += 10;
+                document.getElementById('score').value = value;
+                document.getElementById('score').innerHTML = value;
+                sound.pause();
+                sound.currentTime = 0;
+                sound.play();
+                resetPointsText(text);
                 clearTheRow(this.backgroundTable,i);
-                this.rebuildMap();
+                i++;
             }
             rowCounter=0;
         }
+        this.rebuildMap();
     };
 
     function clearTheRow(table,rowNumber){
@@ -90,6 +98,11 @@ define(['Settings', 'PIXI'], function (Settings, PIXI) {
             }
         }
         return false;
+    }
+    function resetPointsText(text){
+        text.x = Math.round(Settings.screenWidth / 2 - text.width / 2);
+        text.y = Math.round(Settings.screenHeight / 2 - text.height / 2);
+        text.alpha = 1;
     }
 
     return Map;

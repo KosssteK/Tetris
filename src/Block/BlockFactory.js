@@ -43,11 +43,8 @@ define(['Settings',
         return new this.instance(blockType);
     };
     BlockFactory.prototype.randomBlock= function(){
-
         return Math.round(Math.random()*6+1);
     };
 
     return BlockFactory;
-
-
 });

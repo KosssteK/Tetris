@@ -40,20 +40,17 @@ define(['PIXI', 'Settings'], function (PIXI, Settings) {
 
         this.y += Settings.blockHeight;
     };
-    Block.prototype.moveSideways = function (direction) {
-
-        if (direction === -1 && (this.x) > 0) {
-            this.x -= Settings.blockWidth;
-        } else if (direction === 1 && (this.x + this.blockTable[0].length * Settings.blockWidth) < Settings.screenWidth) {
-            this.x += Settings.blockWidth;
+    Block.prototype.moveSideways = function (map, direction) {
+        if (((this.x) > 0 || (this.x + this.blockTable[0].length * Settings.blockWidth) < Settings.screenWidth) && blockCollision(this, map, direction)) {
+            this.x = this.x + direction*Settings.blockWidth;
         }
     };
-    Block.prototype.rotate = function () {
+    Block.prototype.rotate = function (map, rotate) {
         var table = [];
         for (var i = 0; i < this.blockTable[0].length; i++) {
             table[i] = [];
-            for(var j = 0; j < this.blockTable.length; j++){
-                table[i][j]=0;
+            for (var j = 0; j < this.blockTable.length; j++) {
+                table[i][j] = 0;
             }
         }
         for (var i = 0; i < table.length; i++) {
@@ -61,12 +58,45 @@ define(['PIXI', 'Settings'], function (PIXI, Settings) {
                 table[i][j] = this.blockTable[j][table.length - i - 1];
             }
         }
-        this.blockTable = table;
-        this.removeChildren();
-        this.buildBlock();
+
+        rotate.pause();
+        rotate.currentTime = 0;
+        if(!isColliding(this, table, map)){
+            rotate.play();
+            this.blockTable = table;
+            this.removeChildren();
+            this.buildBlock();
+        }
     };
 
+    function blockCollision(block, map, direction) {
+            for (var i = 0; i < block.blockTable.length; i++) {
+                for (var j = 0; j < block.blockTable[i].length; j++) {
+                    var neighbour = (block.x + direction*Settings.blockWidth + j * Settings.blockWidth) / Settings.blockWidth;
+                    var y = (block.y + i * Settings.blockHeight) / Settings.blockHeight;
+                    if (block.blockTable[i][j] === 1) {
+                        if (map.backgroundTable[y][neighbour] !== 'background') {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+    }
+    function isColliding(block, table, map){
+
+        for (var i = 0; i < table.length; i++) {//2
+            for (var j = 0; j < table[i].length; j++) { //3
+                var x = (block.x + j * Settings.blockWidth) / Settings.blockWidth;
+                var y = (block.y + i * Settings.blockHeight) / Settings.blockHeight;
+                if (map.backgroundTable[y][x] !== 'background') {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
 
     return Block;
-
 });
