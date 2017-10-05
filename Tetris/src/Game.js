@@ -25,8 +25,8 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
     var map = new Map();
     var blockFactory = new BlockFactory();
     var block = new Block();
-    var fff = 5;
-    var req = null;var d =66;
+    var timeCounter = 0;
+    var req = null;
     var tetrisSong = new Audio('assets/Sounds/tetris_song.mp3');
     tetrisSong.loop = true;
     var rotateSound = new Audio('assets/Sounds/rotate.mp3');
@@ -35,6 +35,16 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
     var pointsText = new PIXI.Text('+10', {fontFamily: 'Arial', fontSize: 40, fill: 0xff1010, align: 'center'});
 
 
+    PIXI.loader
+        .add('blue', 'assets/Blocks/block_blue.png')
+        .add('cyan', 'assets/Blocks/block_cyan.png')
+        .add('green', 'assets/Blocks/block_green.png')
+        .add('orange', 'assets/Blocks/block_orange.png')
+        .add('purple', 'assets/Blocks/block_purple.png')
+        .add('red', 'assets/Blocks/block_red.png')
+        .add('yellow', 'assets/Blocks/block_yellow.png')
+        .add('background', 'assets/Blocks/background.png')
+        .load(setup);
 
     function setup() {
         map.buildMap();
