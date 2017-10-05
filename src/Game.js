@@ -25,7 +25,7 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
     var map = new Map();
     var blockFactory = new BlockFactory();
     var block = new Block();
-    var timeCounter = 0;
+    var timeCounter = 0;var aass =7;
     var req = null;
     var tetrisSong = new Audio('assets/Sounds/tetris_song.mp3');
     tetrisSong.loop = true;
@@ -49,7 +49,7 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
     function setup() {
         map.buildMap();
         tetrisSong.play();
-        setPointsAnimatoin();
+        setPointsAnimation();
         Settings.stage.addChild(pointsText);
         gameLoop();
 
@@ -137,7 +137,7 @@ define(['Settings', 'PIXI', 'Map', 'BlockFactory', 'Block'], function (Settings,
         Settings.stage.addChild(message);
     }
 
-    function setPointsAnimatoin() {
+    function setPointsAnimation() {
         pointsText.alpha = 256;
         pointsText.x = Settings.screenWidth / 2 - pointsText.width / 2;
         pointsText.y = Math.round(Settings.screenHeight / 2) - pointsText.height / 2;

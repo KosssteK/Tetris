@@ -12,7 +12,7 @@ define([], function () {
             var screenHeight = 464;
             var blockHeight = 16;
             var blockWidth = 16;
-            var speed = 3;
+            var speed = 10;
             var renderer = null;
             var stage = null;
 
